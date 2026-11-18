@@ -5,6 +5,7 @@ from typing import List, Dict, Any, Optional, Tuple
 from config.settings import settings
 
 def get_connection() -> sqlite3.Connection:
+    settings.DB_PATH.parent.mkdir(parents=True, exist_ok=True)
     conn = sqlite3.connect(settings.DB_PATH)
     conn.row_factory = sqlite3.Row
     return conn

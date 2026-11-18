@@ -52,6 +52,7 @@ jobs:
           ENABLE_EMAIL_DIGEST: "true"
           PYTHONUNBUFFERED: "1"
         run: |
+          mkdir -p data applications
           python run.py --hunt
 
       - name: Save Generated Applications as Artifacts
