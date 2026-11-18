@@ -40,9 +40,14 @@ def main():
 
     if args.hunt:
         print("[CLI Mode] Launching autonomous job hunting cycle...")
-        orchestrator = JobHunterOrchestrator()
-        result = orchestrator.run_hunt()
-        print(f"\n[CLI Mode] Finished: {result}")
+        try:
+            orchestrator = JobHunterOrchestrator()
+            result = orchestrator.run_hunt()
+            print(f"\n[CLI Mode] Finished: {result}")
+        except Exception as e:
+            print(f"\n[CLI Mode Notice] Cycle encountered notice: {e}")
+            import traceback
+            traceback.print_exc()
         sys.exit(0)
 
     if args.check_email:

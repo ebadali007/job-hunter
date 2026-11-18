@@ -46,7 +46,12 @@ class PlaywrightSafeAssistant:
             with sync_playwright() as p:
                 browser = p.chromium.launch(
                     headless=self.headless,
-                    args=["--disable-blink-features=AutomationControlled"]
+                    args=[
+                        "--no-sandbox",
+                        "--disable-setuid-sandbox",
+                        "--disable-dev-shm-usage",
+                        "--disable-blink-features=AutomationControlled"
+                    ]
                 )
                 context = browser.new_context(
                     viewport={"width": 1280, "height": 800},
