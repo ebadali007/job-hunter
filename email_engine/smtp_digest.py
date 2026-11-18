@@ -13,7 +13,13 @@ class EmailDigestSender:
         self.smtp_port = 587
         self.username = settings.GMAIL_USER
         self.password = settings.GMAIL_APP_PASSWORD
-        self.recipient = settings.NOTIFY_EMAIL or settings.GMAIL_USER or settings.CANDIDATE_EMAIL
+        # Send to both candidate email and notify email (no duplicates)
+        recips = []
+        for e in [settings.CANDIDATE_EMAIL, settings.NOTIFY_EMAIL, settings.GMAIL_USER]:
+            if e and e.strip() and e.strip() not in recips:
+                recips.append(e.strip())
+        self.recipients = recips
+        self.recipient = ", ".join(recips)
 
     def is_configured(self) -> bool:
         return bool(self.username and self.password and len(self.password) >= 16)
@@ -58,7 +64,7 @@ class EmailDigestSender:
             with smtplib.SMTP(self.smtp_server, self.smtp_port) as server:
                 server.starttls()
                 server.login(self.username, self.password)
-                server.send_message(msg)
+                server.send_message(msg, to_addrs=self.recipients)
             print(f"[EmailDigestSender] Daily report successfully sent to {self.recipient} with {attached_count} attachments.")
             return True
         except Exception as e:
@@ -101,7 +107,7 @@ class EmailDigestSender:
             with smtplib.SMTP(self.smtp_server, self.smtp_port) as server:
                 server.starttls()
                 server.login(self.username, self.password)
-                server.send_message(msg)
+                server.send_message(msg, to_addrs=self.recipients)
             return True
         except Exception as e:
             print(f"[EmailDigestSender] Recruiter alert send error: {e}")
