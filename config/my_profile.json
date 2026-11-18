@@ -1,0 +1,145 @@
+{
+  "name": "Ebad Ali",
+  "title": "Software Engineer & Senior Frontend Specialist",
+  "experience_years": 4,
+  "level": "Mid-to-Senior",
+  "contact": {
+    "email": "m.ebaadali007@gmail.com",
+    "notification_email": "zaiebad56@gmail.com",
+    "phone": "+92 329 3246454",
+    "location": "Karachi, Pakistan (Open to Remote - US / EU / APAC Timezones)",
+    "linkedin": "https://linkedin.com/in/ebad-ali",
+    "github": "https://github.com/ebad-ali",
+    "portfolio": "https://ebad-ali-portfolio.vercel.app"
+  },
+  "target_preferences": {
+    "roles": [
+      "Frontend Engineer",
+      "Senior Frontend Developer",
+      "React Developer",
+      "Next.js Developer",
+      "TypeScript Developer",
+      "Software Engineer",
+      "Web Developer",
+      "Frontend & WordPress Developer",
+      "Headless CMS Developer",
+      "UI/UX Frontend Engineer"
+    ],
+    "locations": [
+      "Worldwide Remote",
+      "Remote",
+      "Anywhere",
+      "United States",
+      "Canada",
+      "United Kingdom",
+      "Europe",
+      "Germany",
+      "Netherlands",
+      "UAE",
+      "Dubai",
+      "Australia",
+      "APAC",
+      "Visa Sponsorship",
+      "Relocation"
+    ],
+    "min_match_score": 75,
+    "job_types": ["Full-time", "Contract", "Remote"]
+  },
+  "skills": {
+    "frontend": [
+      "React.js",
+      "Next.js",
+      "TypeScript",
+      "JavaScript (ES6+)",
+      "HTML5 & CSS3",
+      "Tailwind CSS",
+      "Bootstrap",
+      "Responsive UI",
+      "Core Web Vitals",
+      "Technical SEO",
+      "Performance Tuning"
+    ],
+    "cms_and_custom_web": [
+      "WordPress Dev",
+      "Custom PHP Themes",
+      "WooCommerce",
+      "Headless CMS",
+      "Elementor Pro",
+      "Gutenberg Blocks"
+    ],
+    "state_and_apis": [
+      "RESTful APIs",
+      "Redux Toolkit",
+      "Zustand",
+      "Axios / Fetch",
+      "JSON Data"
+    ],
+    "ai_workflows_and_devops": [
+      "Git & GitHub",
+      "Cursor AI",
+      "Claude 3.7",
+      "Antigravity",
+      "Vercel / Netlify",
+      "VS Code"
+    ],
+    "collaboration_tools": [
+      "Slack",
+      "Jira",
+      "Loom",
+      "Agile/Scrum"
+    ],
+    "languages": [
+      "English (Professional Fluent)",
+      "Urdu (Native)"
+    ]
+  },
+  "summary": "Results-driven Software Engineer & Senior Frontend Specialist with 4+ years of hands-on experience crafting high-performance, accessible, and scalable web applications for global clients. Specialized in React.js, Next.js, TypeScript, JavaScript (ES6+), Tailwind CSS, and Custom WordPress Theme Development. Proven track record of boosting website performance by 45%+, improving organic search traffic by 40%, and integrating complex RESTful APIs. Adept at leveraging AI-powered development workflows (Cursor AI, Claude 3.7) to accelerate feature delivery by 2x while maintaining clean code standards in cross-functional, asynchronous remote engineering teams.",
+  "experience": [
+    {
+      "company": "Global Remote Clients | International Projects",
+      "role": "Senior Frontend & CMS Engineer (Remote / Freelance)",
+      "period": "2024 - Present",
+      "location": "Remote",
+      "highlights": [
+        "Architected and delivered 20+ responsive web applications and SPA components using React.js, Next.js, and TypeScript, improving client user retention by 35%.",
+        "Conducted deep Core Web Vitals audits, code splitting, and asset compression, reducing average page load times by 45% (Lighthouse performance score 95+).",
+        "Developed bespoke WordPress themes and custom Gutenberg blocks using PHP and REST APIs, empowering client teams with seamless content management workflows.",
+        "Implemented structured JSON-LD schemas, meta tags, and semantic HTML5 architectures, driving a 40% growth in organic search traffic across enterprise projects.",
+        "Connected third-party RESTful APIs, payment gateways (Stripe/PayPal), and analytics tools into seamless frontend dashboards.",
+        "Utilized AI developer tools (Cursor AI, Claude 3.7) to double development velocity, refactor legacy codebases, and maintain rigorous code quality."
+      ]
+    },
+    {
+      "company": "Tech Solutions & Web Agency",
+      "role": "Frontend & WordPress Web Developer",
+      "period": "2022 - 2024",
+      "location": "Karachi, Pakistan",
+      "highlights": [
+        "Built high-converting WordPress storefronts and custom WooCommerce solutions handling multi-currency payment workflows over a 2-year period.",
+        "Performed database query optimizations, server-side caching, and security hardening, improving page loading speed by 40%.",
+        "Customized PHP template tags, CSS Grid/Flexbox, and media queries to ensure 100% pixel-perfect display across mobile, tablet, and desktop devices.",
+        "Automated client reporting pipelines and technical audit checks, reducing weekly administrative overhead by 10+ hours."
+      ]
+    }
+  ],
+  "projects": [
+    {
+      "name": "AI-Accelerated Web Application Dashboard",
+      "tech_stack": "React.js, TypeScript, Tailwind CSS, REST APIs, Git, Vercel",
+      "description": "Designed and deployed an interactive web application dashboard featuring dynamic data charts, theme switching, and real-time state management. Leveraged AI tools (Cursor AI, Claude 3.7) for 2x faster component prototyping."
+    },
+    {
+      "name": "E-Commerce Headless Storefront & Custom CMS",
+      "tech_stack": "WordPress, WooCommerce, PHP, JavaScript, CSS3, REST API",
+      "description": "Architected a custom WooCommerce platform with bespoke PHP theme templates, AJAX live search, payment gateway integrations, and load speeds under 1.2 seconds."
+    }
+  ],
+  "education": [
+    {
+      "degree": "BS in Software Engineering (In Progress)",
+      "institution": "SMI University, Karachi, Pakistan",
+      "period": "2023 - Present | Expected 2027",
+      "details": "Relevant Coursework: Data Structures & Algorithms, Web Engineering, Object-Oriented Programming (OOP), Database Systems, Software Architecture. Maintained academic distinction on the Dean's List."
+    }
+  ]
+}

@@ -1,0 +1,15 @@
+[Unit]
+Description=Global Job Hunter AI Autonomous System
+After=network.target
+
+[Service]
+Type=simple
+User=root
+WorkingDirectory=/var/www/job-hunter
+ExecStart=/var/www/job-hunter/venv/bin/python -u run.py --port 8050 --no-browser
+Restart=always
+RestartSec=10
+Environment=PYTHONUNBUFFERED=1
+
+[Install]
+WantedBy=multi-user.target

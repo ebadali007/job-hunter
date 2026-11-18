@@ -1,0 +1,26 @@
+# Secrets & Configuration
+.env
+*.env
+*.pem
+
+# Python & Cache
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+.venv/
+
+# Database & Generated Files
+data/*.db
+data/*.sqlite
+applications/*.pdf
+
+# OS & Editor
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+*.log

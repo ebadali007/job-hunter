@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Global Job Hunter AI • Autonomous Career Engine</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+            mono: ['JetBrains Mono', 'monospace'],
+          },
+          colors: {
+            brand: {
+              50: '#f0f9ff',
+              400: '#38bdf8',
+              500: '#0ea5e9',
+              600: '#0284c7',
+            }
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    body { font-family: 'Inter', sans-serif; background-color: #0b1120; color: #f8fafc; }
+    .glass-card { background: rgba(30, 41, 59, 0.7); backdrop-filter: blur(12px); border: 1px solid rgba(51, 65, 85, 0.7); }
+    .terminal-scrollbar::-webkit-scrollbar { width: 6px; }
+    .terminal-scrollbar::-webkit-scrollbar-track { background: #0b1120; }
+    .terminal-scrollbar::-webkit-scrollbar-thumb { background: #334155; border-radius: 4px; }
+    @keyframes pulse-ring {
+      0% { transform: scale(0.95); opacity: 0.8; }
+      50% { transform: scale(1.05); opacity: 0.3; }
+      100% { transform: scale(0.95); opacity: 0.8; }
+    }
+    .pulse-glow { animation: pulse-ring 2s infinite ease-in-out; }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col selection:bg-brand-500 selection:text-white">
+
+  <!-- TOP NAVIGATION BAR -->
+  <header class="sticky top-0 z-40 bg-[#0b1120]/90 backdrop-blur-md border-b border-slate-800 px-6 py-3.5">
+    <div class="max-w-7xl mx-auto flex items-center justify-between">
+      <!-- Logo & Candidate Info -->
+      <div class="flex items-center space-x-4">
+        <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-brand-600 to-indigo-600 flex items-center justify-center shadow-lg shadow-brand-500/20">
+          <i data-lucide="crosshair" class="w-5 h-5 text-white"></i>
+        </div>
+        <div>
+          <div class="flex items-center space-x-2">
+            <h1 class="text-lg font-bold text-slate-100 tracking-tight">Global Job Hunter <span class="text-brand-400 font-extrabold text-xs uppercase bg-brand-500/10 border border-brand-500/30 px-2 py-0.5 rounded-full ml-1.5">Autonomous & Auto-Apply</span></h1>
+          </div>
+          <p class="text-xs text-slate-400 flex items-center space-x-2">
+            <span class="inline-block w-2 h-2 rounded-full bg-emerald-400"></span>
+            <span id="candidate-name-badge">Muhammad Bilal</span>
+            <span class="text-slate-600">•</span>
+            <span class="text-slate-400">Worldwide Remote + Relocation</span>
+          </p>
+        </div>
+      </div>
+
+      <!-- Action Buttons -->
+      <div class="flex items-center space-x-3">
+        <!-- Check Recruiter Inbox Button -->
+        <button id="btn-check-inbox" onclick="checkInboxNow()" class="hidden md:flex items-center space-x-2 px-3.5 py-2 text-xs font-medium rounded-lg glass-card hover:bg-slate-700/60 text-slate-300 transition-all border border-slate-700">
+          <i data-lucide="mail-search" class="w-4 h-4 text-brand-400"></i>
+          <span>Check Recruiter Replies</span>
+        </button>
+
+        <!-- Start Hunting Primary Button -->
+        <button id="btn-start-hunt" onclick="triggerJobHunt()" class="relative group flex items-center space-x-2 px-4 py-2 text-xs font-semibold rounded-lg bg-gradient-to-r from-brand-500 via-indigo-600 to-emerald-500 hover:from-brand-600 hover:to-emerald-600 text-white shadow-lg shadow-brand-500/25 transition-all transform hover:-translate-y-0.5 active:translate-y-0">
+          <i data-lucide="zap" id="hunt-icon" class="w-4 h-4 animate-bounce"></i>
+          <span id="hunt-text">Run Hunt Now</span>
+        </button>
+
+        <!-- Settings Modal Opener -->
+        <button onclick="openSettingsModal()" class="p-2 text-slate-400 hover:text-slate-100 hover:bg-slate-800 rounded-lg transition-colors border border-slate-800">
+          <i data-lucide="settings" class="w-4 h-4"></i>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- MAIN WRAPPER -->
+  <main class="max-w-7xl mx-auto px-6 py-6 flex-1 w-full space-y-6">
+
+    <!-- AUTONOMOUS AUTO-PILOT & 24H FRESHNESS STATUS BAR -->
+    <div class="glass-card rounded-2xl p-4 border border-emerald-500/30 bg-gradient-to-r from-slate-900/90 via-slate-900/70 to-emerald-950/20 flex flex-wrap items-center justify-between gap-4">
+      <div class="flex items-center space-x-3">
+        <div id="autopilot-pulse-dot" class="w-3.5 h-3.5 rounded-full bg-emerald-400 pulse-glow"></div>
+        <div>
+          <div class="flex items-center space-x-2">
+            <span class="text-xs font-bold text-slate-100 uppercase tracking-wider">Autonomous Auto-Pilot:</span>
+            <span id="autopilot-status-badge" class="px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-emerald-500/20 text-emerald-300 border border-emerald-500/40">ACTIVE (Scanning & Auto-Applying)</span>
+          </div>
+          <p class="text-xs text-slate-400 mt-0.5 flex items-center space-x-2">
+            <span class="text-brand-400 font-semibold flex items-center space-x-1">
+              <i data-lucide="clock" class="w-3.5 h-3.5 inline"></i>
+              <span>Freshness: Strictly &lt; 24 Hours Only</span>
+            </span>
+            <span class="text-slate-600">•</span>
+            <span id="autopilot-countdown" class="font-mono text-emerald-400">Next Auto-Scan in: ~60m</span>
+          </p>
+        </div>
+      </div>
+
+      <div class="flex items-center space-x-3">
+        <button id="btn-toggle-autopilot" onclick="toggleAutoPilotState()" class="px-3.5 py-1.5 rounded-xl text-xs font-semibold bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 flex items-center space-x-1.5 transition-all">
+          <i data-lucide="power" class="w-3.5 h-3.5 text-emerald-400"></i>
+          <span id="autopilot-toggle-text">Pause Auto-Pilot</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- METRICS OVERVIEW CARDS -->
+    <div class="grid grid-cols-2 md:grid-cols-5 gap-4">
+      <!-- Metric 1: Total Scraped -->
+      <div class="glass-card rounded-2xl p-4 relative overflow-hidden">
+        <div class="flex items-center justify-between text-slate-400 mb-2">
+          <span class="text-xs font-medium uppercase tracking-wider">Discovered (&lt;24h)</span>
+          <i data-lucide="globe-2" class="w-4 h-4 text-brand-400"></i>
+        </div>
+        <div class="text-2xl font-bold text-slate-100" id="stat-total">0</div>
+        <p class="text-[11px] text-slate-400 mt-1">100% authentic fresh jobs</p>
+      </div>
+
+      <!-- Metric 2: High Matches -->
+      <div class="glass-card rounded-2xl p-4 relative overflow-hidden border-emerald-500/30">
+        <div class="flex items-center justify-between text-slate-400 mb-2">
+          <span class="text-xs font-medium uppercase tracking-wider">High Match (≥75%)</span>
+          <i data-lucide="target" class="w-4 h-4 text-emerald-400"></i>
+        </div>
+        <div class="text-2xl font-bold text-emerald-400" id="stat-high">0</div>
+        <p class="text-[11px] text-emerald-500/80 mt-1">AI Verified Matches</p>
+      </div>
+
+      <!-- Metric 3: Tailored Documents -->
+      <div class="glass-card rounded-2xl p-4 relative overflow-hidden">
+        <div class="flex items-center justify-between text-slate-400 mb-2">
+          <span class="text-xs font-medium uppercase tracking-wider">Tailored Packages</span>
+          <i data-lucide="file-check-2" class="w-4 h-4 text-indigo-400"></i>
+        </div>
+        <div class="text-2xl font-bold text-indigo-400" id="stat-tailored">0</div>
+        <p class="text-[11px] text-slate-400 mt-1">ATS Resumes & Cover Letters</p>
+      </div>
+
+      <!-- Metric 4: Auto-Applied -->
+      <div class="glass-card rounded-2xl p-4 relative overflow-hidden border-amber-500/30">
+        <div class="flex items-center justify-between text-slate-400 mb-2">
+          <span class="text-xs font-medium uppercase tracking-wider">Auto-Applied</span>
+          <i data-lucide="send" class="w-4 h-4 text-amber-400"></i>
+        </div>
+        <div class="text-2xl font-bold text-amber-400" id="stat-applied">0</div>
+        <p class="text-[11px] text-amber-500/80 mt-1">Submitted Autonomously</p>
+      </div>
+
+      <!-- Metric 5: Recruiter Inquiries -->
+      <div class="glass-card rounded-2xl p-4 relative overflow-hidden col-span-2 md:col-span-1 border-brand-500/30 cursor-pointer" onclick="switchTab('recruiter-tab')">
+        <div class="flex items-center justify-between text-slate-400 mb-2">
+          <span class="text-xs font-medium uppercase tracking-wider">Recruiter Replies</span>
+          <div class="relative">
+            <i data-lucide="message-square" class="w-4 h-4 text-brand-400"></i>
+            <span id="unread-dot" class="hidden absolute -top-1 -right-1 w-2.5 h-2.5 rounded-full bg-rose-500 pulse-glow"></span>
+          </div>
+        </div>
+        <div class="text-2xl font-bold text-brand-400" id="stat-replies">0</div>
+        <p class="text-[11px] text-slate-400 mt-1">Interview Invites</p>
+      </div>
+    </div>
+
+    <!-- REAL-TIME LOG STREAMING CONSOLE (COLLAPSIBLE) -->
+    <div class="glass-card rounded-2xl overflow-hidden border border-slate-800">
+      <div class="bg-slate-900/80 px-4 py-2.5 border-b border-slate-800 flex items-center justify-between cursor-pointer" onclick="toggleTerminal()">
+        <div class="flex items-center space-x-2 text-xs">
+          <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+          <span class="font-mono text-slate-300 font-semibold">Autonomous Hunter Live Terminal</span>
+          <span class="text-slate-500 font-mono text-[11px]" id="terminal-status">(Auto-Pilot Active • Ready)</span>
+        </div>
+        <div class="flex items-center space-x-3 text-slate-400 hover:text-slate-200">
+          <span class="text-[11px] font-mono">Toggle Console</span>
+          <i data-lucide="chevron-down" id="terminal-chevron" class="w-4 h-4 transition-transform duration-300"></i>
+        </div>
+      </div>
+      <div id="terminal-drawer" class="bg-[#050914] p-4 font-mono text-xs text-slate-300 space-y-1 max-h-56 overflow-y-auto terminal-scrollbar transition-all duration-300">
+        <div class="text-slate-500">[System Initialized] SQLite DB ready • Multi-source scrapers active (&lt;24h filter) • Autonomous Auto-Applicant Armed.</div>
+      </div>
+    </div>
+
+    <!-- NAVIGATION TABS -->
+    <div class="flex items-center space-x-2 border-b border-slate-800 pb-3">
+      <button onclick="switchTab('jobs-tab')" id="tab-btn-jobs" class="px-4 py-2 rounded-xl text-xs font-semibold bg-brand-500/10 text-brand-400 border border-brand-500/30 flex items-center space-x-2 transition-all">
+        <i data-lucide="briefcase" class="w-4 h-4"></i>
+        <span>Matched Opportunities (&lt;24h)</span>
+      </button>
+      <button onclick="switchTab('recruiter-tab')" id="tab-btn-recruiter" class="px-4 py-2 rounded-xl text-xs font-semibold text-slate-400 hover:text-slate-200 hover:bg-slate-800/50 flex items-center space-x-2 transition-all">
+        <i data-lucide="inbox" class="w-4 h-4"></i>
+        <span>Recruiter Replies & Alerts</span>
+        <span id="tab-reply-badge" class="hidden px-1.5 py-0.5 rounded-full text-[10px] bg-rose-500 text-white font-bold">0</span>
+      </button>
+    </div>
+
+    <!-- ========================================== -->
+    <!-- TAB 1: MATCHED JOBS FEED                   -->
+    <!-- ========================================== -->
+    <div id="jobs-tab-content" class="space-y-4">
+      <!-- Search & Filters Toolbar -->
+      <div class="glass-card rounded-2xl p-4 flex flex-wrap items-center justify-between gap-4">
+        <!-- Search Input -->
+        <div class="relative flex-1 min-w-[240px]">
+          <i data-lucide="search" class="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2"></i>
+          <input type="text" id="filter-search" oninput="debounceFetchJobs()" placeholder="Search by role, company, or tech stack (e.g. React, Flutter, Next.js)..." class="w-full bg-slate-900/90 border border-slate-700/80 rounded-xl pl-9 pr-4 py-2 text-xs text-slate-100 placeholder-slate-500 focus:outline-none focus:border-brand-500 transition-colors">
+        </div>
+
+        <!-- Match Score Slider -->
+        <div class="flex items-center space-x-3 bg-slate-900/60 border border-slate-800 px-3.5 py-1.5 rounded-xl">
+          <label class="text-xs text-slate-300 font-medium whitespace-nowrap">Min Match:</label>
+          <input type="range" id="filter-min-score" min="0" max="95" step="5" value="75" oninput="updateScoreLabel(this.value); debounceFetchJobs();" class="w-24 accent-brand-500 cursor-pointer">
+          <span id="score-label" class="text-xs font-bold text-brand-400 font-mono w-9">75%</span>
+        </div>
+
+        <!-- Status Filter Dropdown -->
+        <div class="flex items-center space-x-2">
+          <select id="filter-status" onchange="fetchJobs()" class="bg-slate-900/90 border border-slate-700/80 rounded-xl px-3 py-2 text-xs text-slate-200 focus:outline-none focus:border-brand-500">
+            <option value="all">All Statuses</option>
+            <option value="applied">Auto-Applied</option>
+            <option value="tailored">Tailored Packages Ready</option>
+            <option value="matched">Matched Only</option>
+            <option value="discovered">Discovered</option>
+          </select>
+
+          <!-- Refresh Button -->
+          <button onclick="fetchJobs()" title="Refresh job list" class="p-2 text-slate-400 hover:text-slate-100 bg-slate-900 border border-slate-800 rounded-xl transition-colors">
+            <i data-lucide="rotate-cw" class="w-4 h-4"></i>
+          </button>
+        </div>
+      </div>
+
+      <!-- Jobs Grid Container -->
+      <div id="jobs-container" class="space-y-4">
+        <!-- Rendered dynamically via JavaScript -->
+        <div class="text-center py-16 text-slate-400">
+          <i data-lucide="loader-2" class="w-8 h-8 animate-spin mx-auto text-brand-400 mb-3"></i>
+          <p class="text-sm">Loading fresh (&lt;24h) global jobs...</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ========================================== -->
+    <!-- TAB 2: RECRUITER INBOX TRACKER             -->
+    <!-- ========================================== -->
+    <div id="recruiter-tab-content" class="hidden space-y-4">
+      <div class="glass-card rounded-2xl p-4 flex items-center justify-between">
+        <div>
+          <h2 class="text-sm font-bold text-slate-100">Recruiter Responses & Interview Invitations</h2>
+          <p class="text-xs text-slate-400">Automated IMAP background tracker monitoring your email inbox 24/7</p>
+        </div>
+        <button onclick="checkInboxNow()" class="px-4 py-2 bg-brand-500 hover:bg-brand-600 text-white rounded-xl text-xs font-semibold flex items-center space-x-2 transition-all">
+          <i data-lucide="refresh-cw" class="w-3.5 h-3.5"></i>
+          <span>Check Mail Now</span>
+        </button>
+      </div>
+
+      <div id="recruiter-replies-container" class="space-y-3">
+        <!-- Rendered dynamically -->
+      </div>
+    </div>
+
+  </main>
+
+  <!-- ========================================== -->
+  <!-- MODAL: PREVIEW TAILORED DOCUMENTS         -->
+  <!-- ========================================== -->
+  <div id="preview-modal" class="hidden fixed inset-0 z-50 bg-black/70 backdrop-blur-sm flex items-center justify-center p-4">
+    <div class="glass-card rounded-2xl max-w-3xl w-full max-h-[85vh] flex flex-col border border-slate-700 shadow-2xl">
+      <div class="px-6 py-4 border-b border-slate-700/80 flex items-center justify-between">
+        <div>
+          <h3 id="modal-title" class="text-base font-bold text-slate-100">Tailored ATS Package Preview</h3>
+          <p id="modal-subtitle" class="text-xs text-brand-400"></p>
+        </div>
+        <button onclick="closePreviewModal()" class="text-slate-400 hover:text-slate-100">
+          <i data-lucide="x" class="w-5 h-5"></i>
+        </button>
+      </div>
+
+      <div class="p-6 overflow-y-auto space-y-6 flex-1 text-xs leading-relaxed text-slate-300">
+        <div class="bg-slate-900/80 p-4 rounded-xl border border-slate-800">
+          <h4 class="text-xs font-bold uppercase tracking-wider text-indigo-400 mb-2">ATS-Optimized Resume Summary</h4>
+          <p id="modal-resume-summary" class="text-slate-200"></p>
+        </div>
+
+        <div class="bg-slate-900/80 p-4 rounded-xl border border-slate-800">
+          <h4 class="text-xs font-bold uppercase tracking-wider text-emerald-400 mb-2">Custom Tailored Cover Letter</h4>
+          <pre id="modal-cover-letter" class="whitespace-pre-wrap font-sans text-slate-200 leading-relaxed"></pre>
+        </div>
+      </div>
+
+      <div class="px-6 py-3.5 border-t border-slate-800 flex items-center justify-between bg-slate-900/50">
+        <span class="text-[11px] text-slate-500">Generated & Optimized with 100% Free AI Engine</span>
+        <div class="flex items-center space-x-3" id="modal-download-actions">
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========================================== -->
+  <!-- MODAL: SETTINGS & CANDIDATE CONFIG         -->
+  <!-- ========================================== -->
+  <div id="settings-modal" class="hidden fixed inset-0 z-50 bg-black/70 backdrop-blur-sm flex items-center justify-center p-4">
+    <div class="glass-card rounded-2xl max-w-2xl w-full max-h-[85vh] flex flex-col border border-slate-700 shadow-2xl">
+      <div class="px-6 py-4 border-b border-slate-700/80 flex items-center justify-between">
+        <div class="flex items-center space-x-2">
+          <i data-lucide="sliders" class="w-5 h-5 text-brand-400"></i>
+          <h3 class="text-base font-bold text-slate-100">Settings & Auto-Pilot Configuration</h3>
+        </div>
+        <button onclick="closeSettingsModal()" class="text-slate-400 hover:text-slate-100">
+          <i data-lucide="x" class="w-5 h-5"></i>
+        </button>
+      </div>
+
+      <div class="p-6 overflow-y-auto space-y-4 flex-1 text-xs text-slate-300">
+        <!-- Auto-Pilot & 24h Limits Settings -->
+        <div class="grid grid-cols-2 gap-4 bg-slate-900/80 p-3.5 rounded-xl border border-slate-800">
+          <div>
+            <label class="block text-slate-300 font-semibold mb-1">Max Job Age (Hours)</label>
+            <input type="number" id="settings-max-age" min="1" max="72" value="24" class="w-full bg-slate-950 border border-slate-700 rounded-lg p-2 text-slate-100 text-xs">
+            <span class="text-[10px] text-slate-400">Strictly filters jobs &lt; 24h old</span>
+          </div>
+          <div>
+            <label class="block text-slate-300 font-semibold mb-1">Auto-Pilot Scan Interval (Mins)</label>
+            <input type="number" id="settings-interval" min="15" max="360" value="60" class="w-full bg-slate-950 border border-slate-700 rounded-lg p-2 text-slate-100 text-xs">
+            <span class="text-[10px] text-slate-400">Runs scan loop every N mins</span>
+          </div>
+        </div>
+
+        <div class="flex items-center space-x-3 bg-slate-900/80 p-3.5 rounded-xl border border-slate-800">
+          <input type="checkbox" id="settings-auto-apply" class="w-4 h-4 rounded text-brand-500 accent-brand-500 cursor-pointer">
+          <label for="settings-auto-apply" class="text-xs text-slate-200 font-semibold cursor-pointer">
+            Enable Autonomous Auto-Apply (Automatically submit applications for high-match jobs)
+          </label>
+        </div>
+
+        <div>
+          <label class="block text-slate-400 font-semibold mb-1">Target Roles (Comma-separated)</label>
+          <input type="text" id="settings-target-roles" class="w-full bg-slate-900 border border-slate-700 rounded-lg p-2.5 text-slate-100 text-xs">
+        </div>
+
+        <div>
+          <label class="block text-slate-400 font-semibold mb-1">Preferred Locations / Modalities</label>
+          <input type="text" id="settings-target-locations" class="w-full bg-slate-900 border border-slate-700 rounded-lg p-2.5 text-slate-100 text-xs">
+        </div>
+
+        <div class="grid grid-cols-2 gap-4">
+          <div>
+            <label class="block text-slate-400 font-semibold mb-1">Default Match Threshold (%)</label>
+            <input type="number" id="settings-threshold" min="50" max="95" class="w-full bg-slate-900 border border-slate-700 rounded-lg p-2.5 text-slate-100 text-xs">
+          </div>
+          <div>
+            <label class="block text-slate-400 font-semibold mb-1">Google Gemini API Key (Free Tier)</label>
+            <input type="password" id="settings-gemini-key" placeholder="AIzaSy..." class="w-full bg-slate-900 border border-slate-700 rounded-lg p-2.5 text-slate-100 text-xs">
+          </div>
+        </div>
+
+        <div class="grid grid-cols-2 gap-4">
+          <div>
+            <label class="block text-slate-400 font-semibold mb-1">Gmail Address (for digest & alerts)</label>
+            <input type="email" id="settings-gmail-user" placeholder="your.email@gmail.com" class="w-full bg-slate-900 border border-slate-700 rounded-lg p-2.5 text-slate-100 text-xs">
+          </div>
+          <div>
+            <label class="block text-slate-400 font-semibold mb-1">Gmail 16-Digit App Password</label>
+            <input type="password" id="settings-gmail-app-pwd" placeholder="xxxx xxxx xxxx xxxx" class="w-full bg-slate-900 border border-slate-700 rounded-lg p-2.5 text-slate-100 text-xs">
+          </div>
+        </div>
+
+        <div class="p-3 bg-brand-500/10 border border-brand-500/30 rounded-xl text-[11px] text-brand-300">
+          💡 <b>Zero-Cost Setup:</b> Gemini API is 100% free at Google AI Studio. Playwright runs locally on your PC.
+        </div>
+      </div>
+
+      <div class="px-6 py-4 border-t border-slate-800 flex justify-end space-x-3 bg-slate-900/50">
+        <button onclick="closeSettingsModal()" class="px-4 py-2 rounded-lg text-slate-400 hover:text-slate-100 hover:bg-slate-800 text-xs">Cancel</button>
+        <button onclick="saveSettings()" class="px-5 py-2 rounded-lg bg-brand-500 hover:bg-brand-600 text-white font-semibold text-xs">Save Settings</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- JAVASCRIPT LOGIC -->
+  <script src="/static/js/app.js"></script>
+</body>
+</html>
