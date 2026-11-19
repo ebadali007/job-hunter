@@ -3,7 +3,10 @@ import html
 from abc import ABC, abstractmethod
 from typing import List, Dict, Any, Optional, Tuple
 from datetime import datetime, timezone
-from dateutil import parser as date_parser
+try:
+    from dateutil import parser as date_parser
+except ImportError:
+    date_parser = None
 from bs4 import BeautifulSoup
 from config.settings import settings
 
@@ -137,7 +140,10 @@ class BaseScraper(ABC):
                 return False, 26.0
 
             # Parse standard ISO / RFC formats with dateutil
-            dt = date_parser.parse(date_str)
+            if date_parser:
+                dt = date_parser.parse(date_str)
+            else:
+                dt = datetime.fromisoformat(date_str.replace("Z", "+00:00"))
             if dt.tzinfo is None:
                 dt = dt.replace(tzinfo=timezone.utc)
             else:
