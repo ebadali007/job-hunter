@@ -16,8 +16,10 @@ class AutonomousScheduler:
         self.last_hunt_time: Optional[str] = None
         self.last_imap_time: Optional[str] = None
         self.auto_pilot_enabled: bool = settings.AUTO_PILOT_ENABLED
-        self.interval_minutes: int = settings.AUTO_PILOT_INTERVAL_MINUTES
-        self.seconds_until_next_hunt: int = self.interval_minutes * 60
+        self.continuous_mode: bool = settings.CONTINUOUS_HUNT_MODE
+        self.cooldown_seconds: int = settings.CONTINUOUS_COOLDOWN_SECONDS if self.continuous_mode else (settings.AUTO_PILOT_INTERVAL_MINUTES * 60)
+        self.interval_minutes: int = max(1, self.cooldown_seconds // 60)
+        self.seconds_until_next_hunt: int = self.cooldown_seconds
         self.log_callback = None
 
     def start(self):
@@ -29,11 +31,12 @@ class AutonomousScheduler:
         self._imap_thread = threading.Thread(target=self._imap_loop, daemon=True)
         self._imap_thread.start()
 
-        # 2. Start Autonomous Hunt & Auto-Apply loop
+        # 2. Start Continuous / Autonomous Hunt & Auto-Apply loop
         self._hunt_thread = threading.Thread(target=self._autonomous_hunt_loop, daemon=True)
         self._hunt_thread.start()
 
-        print(f"[Scheduler] Autonomous Auto-Pilot Active! Scanning fresh (<24h) jobs every {self.interval_minutes} minutes.")
+        mode_desc = "Continuous Scanning Mode (Auto-scanning continuously)" if self.continuous_mode else f"every {self.interval_minutes} minutes"
+        print(f"[Scheduler] Autonomous Auto-Pilot Active! {mode_desc} for fresh (<24h) jobs.")
 
     def stop(self):
         self._running = False
@@ -46,12 +49,13 @@ class AutonomousScheduler:
         self.auto_pilot_enabled = enabled
         if interval_mins:
             self.interval_minutes = interval_mins
-            self.seconds_until_next_hunt = interval_mins * 60
-        print(f"[Scheduler] Auto-Pilot toggled: {self.auto_pilot_enabled} (Interval: {self.interval_minutes}m)")
+            self.cooldown_seconds = interval_mins * 60
+            self.seconds_until_next_hunt = self.cooldown_seconds
+        print(f"[Scheduler] Auto-Pilot toggled: {self.auto_pilot_enabled} (Continuous: {self.continuous_mode}, Interval: {self.interval_minutes}m)")
 
     def _autonomous_hunt_loop(self):
         # Initial delay before first background cycle so app starts up cleanly
-        time.sleep(10)
+        time.sleep(5)
 
         # Run first autonomous cycle immediately on startup if enabled
         if self.auto_pilot_enabled:
@@ -60,21 +64,21 @@ class AutonomousScheduler:
             except Exception as e:
                 print(f"[Scheduler Loop] Initial cycle error: {e}")
 
-        timer = self.interval_minutes * 60
+        timer = self.cooldown_seconds
         while self._running:
             try:
                 time.sleep(1)
                 timer -= 1
                 self.seconds_until_next_hunt = max(0, timer)
 
-                # Check periodic interval
+                # Check periodic interval / continuous trigger
                 if timer <= 0:
                     if self.auto_pilot_enabled:
                         try:
                             self._execute_cycle()
                         except Exception as e:
                             print(f"[Scheduler Loop] Cycle error: {e}")
-                    timer = self.interval_minutes * 60
+                    timer = self.cooldown_seconds
 
                 # Also check daily digest time (e.g. 09:00)
                 now = datetime.now()

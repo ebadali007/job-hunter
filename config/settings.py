@@ -38,7 +38,9 @@ class Settings(BaseSettings):
     # Strict Freshness & Autonomous Auto-Pilot
     MAX_JOB_AGE_HOURS: int = int(os.getenv("MAX_JOB_AGE_HOURS", "24")) # Strictly under 24 hours
     AUTO_PILOT_ENABLED: bool = os.getenv("AUTO_PILOT_ENABLED", "true").lower() in ("true", "1", "yes")
-    AUTO_PILOT_INTERVAL_MINUTES: int = int(os.getenv("AUTO_PILOT_INTERVAL_MINUTES", "60"))
+    AUTO_PILOT_INTERVAL_MINUTES: int = int(os.getenv("AUTO_PILOT_INTERVAL_MINUTES", "2"))
+    CONTINUOUS_HUNT_MODE: bool = os.getenv("CONTINUOUS_HUNT_MODE", "true").lower() in ("true", "1", "yes")
+    CONTINUOUS_COOLDOWN_SECONDS: int = int(os.getenv("CONTINUOUS_COOLDOWN_SECONDS", "120"))
     AUTO_APPLY_ENABLED: bool = os.getenv("AUTO_APPLY_ENABLED", "true").lower() in ("true", "1", "yes")
     AUTO_APPLY_MIN_SCORE: int = int(os.getenv("AUTO_APPLY_MIN_SCORE", "75"))
 

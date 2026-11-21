@@ -2,8 +2,8 @@ name: Autonomous 24/7 Global Job Hunter
 
 on:
   schedule:
-    # Runs automatically every 1 hour, day and night (PC can be completely OFF)
-    - cron: '0 * * * *'
+    # Runs continuously day and night every 20 minutes (PC can be completely OFF)
+    - cron: '*/20 * * * *'
   workflow_dispatch: # Allows manual trigger from GitHub anytime
 
 jobs:
@@ -43,10 +43,15 @@ jobs:
           CANDIDATE_EMAIL: "m.ebaadali007@gmail.com"
           CANDIDATE_PHONE: "+923293246454"
           CANDIDATE_LOCATION: "Karachi, Pakistan (Open to Remote US/EU/APAC)"
+          CANDIDATE_LINKEDIN: "https://linkedin.com/in/ebaad-zai-57024b230"
+          CANDIDATE_GITHUB: "https://github.com/ebadali007"
+          CANDIDATE_PORTFOLIO: "https://ebad-ali-portfolio.surge.sh/remote/index.html"
           TARGET_ROLES: "Frontend Engineer, Senior Frontend Developer, React Developer, Next.js Developer, TypeScript Developer, Software Engineer, Web Developer, WordPress Developer"
           TARGET_LOCATIONS: "Worldwide Remote, United States, Canada, United Kingdom, Europe, Germany, Netherlands, UAE, Dubai, Australia, APAC"
           MATCH_THRESHOLD: 75
           MAX_JOB_AGE_HOURS: 24
+          CONTINUOUS_HUNT_MODE: "true"
+          AUTO_PILOT_INTERVAL_MINUTES: 2
           AUTO_APPLY_ENABLED: "true"
           AUTO_APPLY_MIN_SCORE: 75
           ENABLE_EMAIL_DIGEST: "true"

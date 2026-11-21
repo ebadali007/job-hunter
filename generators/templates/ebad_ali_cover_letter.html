@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cover Letter - {{ name }} for {{ target_company }}</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap"
+    rel="stylesheet">
+  <style>
+    :root {
+      --primary: #0f172a;
+      --primary-light: #1e293b;
+      --accent: #2563eb;
+      --accent-hover: #1d4ed8;
+      --accent-light: #eff6ff;
+      --accent-border: #bfdbfe;
+      --text-main: #1e293b;
+      --text-muted: #475569;
+      --bg-page: #ffffff;
+      --border: #e2e8f0;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Inter', system-ui, -apple-system, sans-serif;
+      background-color: var(--bg-page);
+      color: var(--text-main);
+      line-height: 1.65;
+      padding: 3rem 3.5rem;
+      max-width: 860px;
+      margin: 0 auto;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .header-box {
+      border-bottom: 2px solid var(--accent);
+      padding-bottom: 1.4rem;
+      margin-bottom: 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .candidate-name {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 2.2rem;
+      font-weight: 800;
+      color: var(--primary);
+      letter-spacing: -0.02em;
+      line-height: 1.1;
+    }
+
+    .candidate-title {
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--accent);
+      margin-top: 0.35rem;
+    }
+
+    .contact-block {
+      text-align: right;
+      font-size: 0.82rem;
+      color: var(--text-muted);
+      line-height: 1.6;
+    }
+
+    .contact-block a {
+      color: var(--accent);
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+    .meta-date {
+      font-size: 0.88rem;
+      color: var(--text-muted);
+      font-weight: 600;
+      margin-bottom: 1.5rem;
+    }
+
+    .recipient-box {
+      margin-bottom: 2rem;
+      font-size: 0.95rem;
+      color: var(--primary);
+      line-height: 1.5;
+    }
+
+    .recipient-name {
+      font-weight: 700;
+      font-size: 1.05rem;
+    }
+
+    .subject-line {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 1rem;
+      font-weight: 800;
+      color: var(--primary);
+      background-color: var(--accent-light);
+      border-left: 4px solid var(--accent);
+      padding: 0.65rem 1rem;
+      margin-bottom: 1.8rem;
+      border-radius: 0 6px 6px 0;
+    }
+
+    .letter-body {
+      font-size: 0.95rem;
+      color: var(--text-main);
+      display: flex;
+      flex-direction: column;
+      gap: 1.15rem;
+      text-align: justify;
+    }
+
+    .letter-body p {
+      line-height: 1.7;
+    }
+
+    .sign-off {
+      margin-top: 2.2rem;
+      font-size: 0.95rem;
+      color: var(--primary);
+    }
+
+    .sign-off-name {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 1.15rem;
+      font-weight: 800;
+      color: var(--primary);
+      margin-top: 0.6rem;
+    }
+
+    .sign-off-role {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+    }
+
+    @page {
+      size: A4 portrait;
+      margin: 15mm;
+    }
+
+    @media print {
+      body {
+        padding: 0 !important;
+        margin: 0 !important;
+      }
+      .subject-line {
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <header class="header-box">
+    <div>
+      <h1 class="candidate-name">{{ name }}</h1>
+      <div class="candidate-title">{{ title }}</div>
+    </div>
+    <div class="contact-block">
+      <div>{{ location }}</div>
+      <div>{{ phone }} | <a href="mailto:{{ email }}">{{ email }}</a></div>
+      <div><a href="{{ linkedin }}" target="_blank">LinkedIn</a> • <a href="{{ github }}" target="_blank">GitHub</a> • <a href="{{ portfolio }}" target="_blank">Portfolio</a></div>
+    </div>
+  </header>
+
+  <div class="meta-date">{{ date_str }}</div>
+
+  <div class="recipient-box">
+    <div class="recipient-name">Hiring Team</div>
+    <div>{{ target_company }}</div>
+    <div>Application for {{ target_role }}</div>
+  </div>
+
+  <div class="subject-line">
+    RE: Application for {{ target_role }} — {{ name }}
+  </div>
+
+  <div class="letter-body">
+    {% for paragraph in letter_paragraphs %}
+    <p>{{ paragraph | safe }}</p>
+    {% endfor %}
+  </div>
+
+  <div class="sign-off">
+    <div>Sincerely,</div>
+    <div class="sign-off-name">{{ name }}</div>
+    <div class="sign-off-role">{{ title }}</div>
+  </div>
+
+</body>
+
+</html>

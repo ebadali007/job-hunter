@@ -116,26 +116,27 @@ Output JSON ONLY with keys "resume_summary", "tailored_bullets" (array), "cover_
         linkedin = contact.get("linkedin", settings.CANDIDATE_LINKEDIN)
 
         summary = (
-            f"Results-driven Mid-to-Senior Full-Stack & Mobile Engineer with 5+ years of production experience, "
-            f"specializing in building scalable, resilient applications tailored for {job_title} responsibilities at {company}. "
-            f"Deeply proficient across modern TypeScript/React/Next.js architectures, cross-platform mobile apps (Flutter/React Native), "
-            f"and high-throughput Python/Node.js microservices. Proven success optimizing system latency by 85% and maintaining 99.9% uptime."
+            f"Results-driven <strong>Software Engineer & Senior Frontend Specialist</strong> with 4+ years of hands-on experience "
+            f"crafting high-performance, accessible, and scalable web applications tailored for <strong>{job_title}</strong> at <strong>{company}</strong>. "
+            f"Deeply specialized in <strong>React.js, Next.js, TypeScript, JavaScript (ES6+), Tailwind CSS, and RESTful API integrations</strong>. "
+            f"Proven record of slashing page load times by 45% (Lighthouse 95+), increasing organic search traffic by 40%, and delivering "
+            f"production features at 2x velocity using AI-accelerated workflows (Cursor AI, Claude 3.7)."
         )
 
         bullets = [
-            f"Engineered high-performance web and mobile systems serving 150k+ active users, closely matching {company}'s tech demands.",
-            "Architected scalable RESTful & GraphQL backend microservices in Python (FastAPI) and Node.js with PostgreSQL and Redis caching.",
-            "Delivered pixel-perfect, accessible user interfaces utilizing Next.js, React, TypeScript, and Tailwind CSS with 95+ Lighthouse scores.",
-            "Established robust CI/CD automation and containerized deployments using Docker and GitHub Actions, slashing release cycles by 40%."
+            f"Architected and deployed responsive web applications and component systems using React.js, Next.js, and TypeScript, directly aligning with {company}'s tech standards.",
+            "Conducted Core Web Vitals audits, code splitting, and bundle optimizations, slashing average load times by 45% with 95+ Lighthouse performance scores.",
+            "Connected complex third-party RESTful APIs, state stores (Redux Toolkit/Zustand), and payment integrations into seamless UI workflows.",
+            "Leveraged AI-assisted development tools (Cursor AI, Claude 3.7) to accelerate feature delivery cycles by 2x while maintaining high code quality."
         ]
 
         cover_letter = f"""Dear Hiring Team at {company},
 
-I am writing to express my strong enthusiasm for the {job_title} position at {company}. With over 5 years of hands-on software engineering experience specializing in Full-Stack web architectures (TypeScript, React, Next.js, Python, Node.js) and cross-platform mobile development (Flutter and React Native), I am confident that my technical expertise and problem-solving mindset make me an immediate contributor to your team.
+I am writing to express my strong enthusiasm for the {job_title} position at {company}. With over 4 years of hands-on software engineering experience specializing in modern frontend architectures (React.js, Next.js, TypeScript, Tailwind CSS) and robust web applications, I am eager to contribute immediately to {company}'s engineering objectives.
 
-Throughout my career, I have focused on building performant, user-centric software that scales reliably. At Apex Global Technologies, I architected SaaS platforms serving over 150,000 monthly active users and engineered production mobile applications with real-time sync that lifted user retention by 42%. In addition, I successfully restructured database and caching layers, cutting API response times from 320ms down to 45ms.
+Throughout my career, I have focused on building performant, responsive web applications, optimizing Core Web Vitals to achieve 95+ Lighthouse scores, and building seamless RESTful API architectures that scale reliably. In my recent roles, I architected over 20 responsive web applications, cut page load times by 45%, and integrated complex APIs and headless CMS backends.
 
-What excites me most about {company} is your commitment to technical innovation and engineering excellence. The requirements outlined in your job description for {job_title} align directly with my hands-on background in modern frontend frameworks, cloud deployment pipelines, and robust backend engineering.
+What excites me most about {company} is your technical vision and commitment to engineering excellence. The requirements outlined in your job description for {job_title} align directly with my hands-on background in modern component design, clean code standards, and agile remote collaboration.
 
 I welcome the opportunity to discuss how my technical skills and proactive engineering approach can help {company} achieve its product milestones. Thank you for your time and consideration.
 

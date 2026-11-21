@@ -27,6 +27,7 @@ def print_banner():
 def main():
     parser = argparse.ArgumentParser(description="Global Job Hunter AI Automation System")
     parser.add_argument("--hunt", action="store_true", help="Run one-shot job hunting pipeline directly in CLI")
+    parser.add_argument("--continuous", action="store_true", help="Run non-stop continuous autonomous job hunting loop in CLI")
     parser.add_argument("--check-email", action="store_true", help="Check Gmail IMAP for recruiter replies and interview invites")
     parser.add_argument("--digest", action="store_true", help="Dispatch daily email digest with top matched jobs")
     parser.add_argument("--port", type=int, default=settings.PORT, help="Port for the dashboard server")
@@ -37,6 +38,29 @@ def main():
     # Initialize SQLite database
     init_db()
     print_banner()
+
+    if args.continuous:
+        import time
+        cooldown = settings.CONTINUOUS_COOLDOWN_SECONDS
+        print(f"🔄 [CLI Continuous Mode] Non-stop continuous job hunter active! Cooldown between cycles: {cooldown}s")
+        orchestrator = JobHunterOrchestrator()
+        cycle_count = 1
+        while True:
+            try:
+                print(f"\n=======================================================")
+                print(f"🚀 [Continuous Cycle #{cycle_count}] Scanning & Applying...")
+                print(f"=======================================================")
+                result = orchestrator.run_hunt()
+                print(f"✅ [Continuous Cycle #{cycle_count}] Finished: {result}")
+                cycle_count += 1
+            except KeyboardInterrupt:
+                print("\n🛑 [CLI Continuous Mode] Stopped by user.")
+                break
+            except Exception as e:
+                print(f"⚠️ [Continuous Cycle Notice] {e}")
+            print(f"⏳ Waiting {cooldown}s before next automatic scan...")
+            time.sleep(cooldown)
+        sys.exit(0)
 
     if args.hunt:
         print("[CLI Mode] Launching autonomous job hunting cycle...")
