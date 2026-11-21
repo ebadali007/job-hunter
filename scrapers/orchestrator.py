@@ -9,6 +9,7 @@ from scrapers.remoteok import RemoteOKScraper
 from scrapers.weworkremotely import WeWorkRemotelyScraper
 from scrapers.jobicy import JobicyScraper
 from scrapers.arbeitnow import ArbeitnowScraper
+from scrapers.himalayas import HimalayasScraper
 from scrapers.autonomous_applicant import AutonomousApplicant
 from ai_engine.gemini_matcher import GeminiJobMatcher
 from ai_engine.doc_tailor import DocumentTailor
@@ -21,6 +22,7 @@ class JobHunterOrchestrator:
         self.scrapers = [
             ArbeitnowScraper(),
             WeWorkRemotelyScraper(),
+            HimalayasScraper(),
             RemotiveScraper(),
             RemoteOKScraper(),
             JobicyScraper()
@@ -138,7 +140,7 @@ class JobHunterOrchestrator:
                     if settings.AUTO_APPLY_ENABLED and score >= settings.AUTO_APPLY_MIN_SCORE:
                         self.log(f"🚀 [Auto-Apply Trigger] Automatically submitting application for {job['company']}...")
                         apply_res = self.applicant.apply_job(job)
-                        if apply_res.get("status") == "applied":
+                        if apply_res.get("status") in ("applied", "prefilled_ready"):
                             auto_applied_count += 1
                             is_applied = True
                             mark_job_status(job_id, "applied")
@@ -158,6 +160,36 @@ class JobHunterOrchestrator:
 
             except Exception as item_err:
                 self.log(f"⚠️ Error processing job {job.get('title')}: {item_err}")
+
+        # 6. Backlog Sweep: Apply to any existing database jobs matching the threshold
+        if settings.AUTO_APPLY_ENABLED:
+            try:
+                from database.db import get_jobs
+                unapplied_matching = get_jobs(min_score=settings.AUTO_APPLY_MIN_SCORE, limit=20)
+                for unapp in unapplied_matching:
+                    if unapp.get("status") != "applied":
+                        self.log(f"⚡ [Backlog Auto-Apply] Processing qualified matching job: {unapp['title']} @ {unapp['company']} ({unapp['match_score']}%)")
+                        if not unapp.get("tailored_cv_path"):
+                            tailored_docs = self.tailor.tailor_documents(
+                                job_title=unapp["title"],
+                                company=unapp["company"],
+                                job_description=unapp["description"],
+                                cv_text=master_cv
+                            )
+                            cv_path, cl_path = self.pdf_gen.generate_tailored_pdf_package(
+                                company=unapp["company"],
+                                job_title=unapp["title"],
+                                tailored_data=tailored_docs
+                            )
+                            unapp["tailored_cv_path"] = cv_path
+                            unapp["tailored_cl_path"] = cl_path
+                        
+                        apply_res = self.applicant.apply_job(unapp)
+                        if apply_res.get("status") in ("applied", "prefilled_ready"):
+                            auto_applied_count += 1
+                            mark_job_status(unapp["id"], "applied")
+            except Exception as back_err:
+                self.log(f"⚠️ [Backlog Sweep Notice] {back_err}")
 
         # 6. Optional Email Digest dispatch
         if settings.ENABLE_EMAIL_DIGEST and high_match_jobs_list:

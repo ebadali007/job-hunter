@@ -30,19 +30,20 @@ class Settings(BaseSettings):
     CANDIDATE_PORTFOLIO: str = os.getenv("CANDIDATE_PORTFOLIO", "")
 
     # Matching & Search Preferences
-    MATCH_THRESHOLD: int = int(os.getenv("MATCH_THRESHOLD", "75"))
+    MATCH_THRESHOLD: int = int(os.getenv("MATCH_THRESHOLD", "55"))
     TARGET_ROLES_RAW: str = os.getenv("TARGET_ROLES", "Full-Stack Developer, Frontend Engineer, Mobile App Developer")
     TARGET_LOCATIONS_RAW: str = os.getenv("TARGET_LOCATIONS", "Worldwide Remote, United States, Canada, United Kingdom, Europe, UAE, Australia")
     MIN_SALARY_USD: int = int(os.getenv("MIN_SALARY_USD", "0"))
 
     # Strict Freshness & Autonomous Auto-Pilot
-    MAX_JOB_AGE_HOURS: int = int(os.getenv("MAX_JOB_AGE_HOURS", "24")) # Strictly under 24 hours
+    MAX_JOB_AGE_HOURS: int = int(os.getenv("MAX_JOB_AGE_HOURS", "48"))
     AUTO_PILOT_ENABLED: bool = os.getenv("AUTO_PILOT_ENABLED", "true").lower() in ("true", "1", "yes")
     AUTO_PILOT_INTERVAL_MINUTES: int = int(os.getenv("AUTO_PILOT_INTERVAL_MINUTES", "2"))
     CONTINUOUS_HUNT_MODE: bool = os.getenv("CONTINUOUS_HUNT_MODE", "true").lower() in ("true", "1", "yes")
     CONTINUOUS_COOLDOWN_SECONDS: int = int(os.getenv("CONTINUOUS_COOLDOWN_SECONDS", "120"))
     AUTO_APPLY_ENABLED: bool = os.getenv("AUTO_APPLY_ENABLED", "true").lower() in ("true", "1", "yes")
-    AUTO_APPLY_MIN_SCORE: int = int(os.getenv("AUTO_APPLY_MIN_SCORE", "75"))
+    AUTO_APPLY_MIN_SCORE: int = int(os.getenv("AUTO_APPLY_MIN_SCORE", "55"))
+    DAILY_APPLY_TARGET: int = int(os.getenv("DAILY_APPLY_TARGET", "20"))
 
     # Gmail SMTP & IMAP
     GMAIL_USER: str = os.getenv("GMAIL_USER", "")

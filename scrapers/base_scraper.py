@@ -49,9 +49,19 @@ class BaseScraper(ABC):
             "sales", "account executive", "legal", "counsel", "recruiter", "talent acquisition",
             "marketing", "data entry", "office assistant", "copywriter", "content creator",
             "customer support", "customer service", "receptionist", "financial analyst", "accountant",
-            "business development", "bdr", "sdr", "sales manager", "commercial lead"
+            "business development", "bdr", "sdr", "sales manager", "commercial lead", "purchasing", "pricing",
+            "warehouse", "driver", "nurse", "therapist", "cashier", "clerk"
         ]
         if any(bad in title_lower for bad in EXCLUDED_KEYWORDS):
+            return False
+
+        # Ensure title reflects software, web, or engineering
+        TECH_TITLE_KEYWORDS = [
+            "engineer", "developer", "programmer", "frontend", "front-end", "web", "software",
+            "react", "wordpress", "fullstack", "full-stack", "typescript", "javascript", "coder",
+            "architect", "tech lead", "dev", "hmi", "ui", "ux", "cms", "devops"
+        ]
+        if not any(k in title_lower for k in TECH_TITLE_KEYWORDS):
             return False
 
         combined = f"{title} {tags} {description[:1200]}".lower()
@@ -68,9 +78,7 @@ class BaseScraper(ABC):
             # Semantic developer/engineer interchangeable matching
             core_words = [w for w in role_norm.split() if w not in ("developer", "engineer", "dev", "app", "application", "specialist", "mid", "senior", "lead")]
             if core_words and all(w in combined_norm for w in core_words):
-                # Ensure it's a software/tech role
-                if any(t in combined_norm for t in ("engineer", "developer", "programmer", "dev", "coder", "tech", "architect", "lead")):
-                    return True
+                return True
 
         return False
 

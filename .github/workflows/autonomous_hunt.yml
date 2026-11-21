@@ -48,12 +48,12 @@ jobs:
           CANDIDATE_PORTFOLIO: "https://ebad-ali-portfolio.surge.sh/remote/index.html"
           TARGET_ROLES: "Frontend Engineer, Senior Frontend Developer, React Developer, Next.js Developer, TypeScript Developer, Software Engineer, Web Developer, WordPress Developer"
           TARGET_LOCATIONS: "Worldwide Remote, United States, Canada, United Kingdom, Europe, Germany, Netherlands, UAE, Dubai, Australia, APAC"
-          MATCH_THRESHOLD: 75
-          MAX_JOB_AGE_HOURS: 24
+          MATCH_THRESHOLD: 55
+          MAX_JOB_AGE_HOURS: 48
           CONTINUOUS_HUNT_MODE: "true"
           AUTO_PILOT_INTERVAL_MINUTES: 2
           AUTO_APPLY_ENABLED: "true"
-          AUTO_APPLY_MIN_SCORE: 75
+          AUTO_APPLY_MIN_SCORE: 55
           ENABLE_EMAIL_DIGEST: "true"
           PYTHONUNBUFFERED: "1"
         run: |
